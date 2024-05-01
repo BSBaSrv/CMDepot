@@ -1,6 +1,4 @@
-import pages
-from layout import *
-from download import download
+from pages import *
     
-pages.page_start()
-pages.start_list()
+page_start()
+start_list(history_data)

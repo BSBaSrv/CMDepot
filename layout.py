@@ -1,6 +1,21 @@
-from colorama import Fore, Back, Style
+#Вспомогательная часть
+def error(num: int | str):
+    match num:
+        case 1 | "1":
+            d_print("Error - ID: 1 - Incorrect type of text", "10")
+        case 2 | "2":
+            d_print("Error - ID: 2 - Incorrect division setting", "10")
+        case 3 | "3":
+            d_print("Error - ID: 3 - Unkown command", "10")
+        case 4 | "4":
+            d_print("Error - ID: 4 - You can't choose in EMPTY dialog", "10")
+        case 5 | "5":
+            d_print("Error - ID: 5 - Somthing is wrong... This function never doesn't exist", "10")
+        case _:
+            d_print("Error - ID: 5 - Error ID doesn't exist", "10")
 
-#Главная часть №1
+
+#Главная часть
 def l_print(list):
     for num in range(len(list)):
         print(str(num + 1) + ".", list[num])
@@ -31,7 +46,7 @@ def d_print(text: str | list, divisions: str):
                 num_of_len_division = 40
 
         case _:
-            print("Error - ID: 1 - Incorrect type of text")
+            error(1)
 
     match len(divisions):
         case 4:
@@ -48,7 +63,7 @@ def d_print(text: str | list, divisions: str):
             elif text == list(text):
                 l_print(text)
             else:
-                print("Error - ID: 1 - Incorrect type of text")
+                error(1)
 
             for i in range(int(divisions[2])):
                 print("")
@@ -70,52 +85,16 @@ def d_print(text: str | list, divisions: str):
             elif text == [] or text == "":
                 pass
             else:
-                print("Error - ID: 1 - Incorrect type of text")
+                error(1)
 
             for i in range(int(divisions[1])):
                 print("")
         case _:
-            print("Error - ID: 2 - Incorrect division setting. Commands starts with '/'")
+            error(2)
 
 
-#Команды. Перемещено из-за циклических импортов (я дегенерат, простите)
-        
-def help():
-    d_print((Style.BRIGHT + 'Выберите один из выше доступных пунктов. ' + Style.RESET_ALL + "\nНо, также, Вы в любой момент можете воспользоваться такими командами как:" + Fore.BLUE + \
-    "\n" \
-    "\n /help" + Style.RESET_ALL + " - помощь" + Fore.BLUE + \
-    "\n /back" + Style.RESET_ALL + " - вернуться" + Fore.BLUE + \
-    "\n /exit" + Style.RESET_ALL + " - выход" \
-), "1110")
-
-def history_for_back():
-    return
-
-def back():
-    return
-
-def command(text):
-    match text[0]:
-        case "/":
-            match text:
-                case "/help":
-                    help()
-                    empty_dialog()
-                case "/exit":
-                    exit()
-                case "/back":
-                    back()
-                    empty_dialog()
-                case _:
-                    d_print("Error - ID: 4 - Unkown command")
-                    empty_dialog()
-        case _:
-            return int(text)
-        
-#help()
-
-#Главная часть №2
 def dialog(text: str, choice_list: list, permission: bool, divisions_list: str, divisions_perm: str):
+    from commands import command
     permission_dialog_list = ["Да", "Нет"]
     num_choice = 0
 
@@ -142,7 +121,10 @@ def dialog(text: str, choice_list: list, permission: bool, divisions_list: str, 
         return num_choice
     
 def empty_dialog():
-    dialog("", [], False, "10", "00")
+    num_or_not = dialog("", [], False, "10", "00")
+
+    if num_or_not != "":
+        error(4)
     
 #d_print(["Прива)", "Негр", "Сам негр"], "1111")
-#num_choice = 0; dialog("Ты балбес?", ["Да", "Нет"], False, num_choice, "22", "00")
+#num_choice = dialog("Ты балбес?", ["Да", "Нет"], False, "22", "00")
