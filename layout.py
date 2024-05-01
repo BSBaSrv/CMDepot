@@ -4,23 +4,32 @@ from colorama import Fore, Style
 
 #Вспомогательная часть
 def error(num: int):
+    from commands import back, history_data
     match num:
         case 1:
             d_print(Fore.RED + "Error - ID: 1 - Incorrect type of text" + Style.RESET_ALL, "10")
+            back(True)
         case 2:
             d_print(Fore.RED + "Error - ID: 2 - Incorrect division setting" + Style.RESET_ALL, "10")
+            back(True)
         case 3:
             d_print(Fore.RED + "Error - ID: 3 - Unkown command" + Style.RESET_ALL, "10")
+            back(True)
         case 4:
             d_print(Fore.RED + "Error - ID: 4 - You can't choose in EMPTY dialog" + Style.RESET_ALL, "10")
+            back(True)
         case 5:
             d_print(Fore.RED + "Error - ID: 5 - Somthing is wrong... This function never doesn't exist" + Style.RESET_ALL, "10")
+            back(True)
         case 6:
             d_print(Fore.RED + "Error - ID: 6 - This type of division never doesn't exist" + Style.RESET_ALL, "10")
+            back(True)
         case 7:
             d_print(Fore.RED + "Error - ID: 7 - Where?" + Style.RESET_ALL, "10")
+            back(True)
         case _:
             d_print(Fore.RED + "Error - ID: 8 - Error ID doesn't exist" + Style.RESET_ALL, "10")
+            back(True)
 
 
 #Главная часть
@@ -37,6 +46,8 @@ def d_print(text: str | list, divisions: str):
             pass
 
     def division(type: int, lenght: int):
+        from math import ceil
+
         match int(type):
             case 0:
                 pass
@@ -54,10 +65,10 @@ def d_print(text: str | list, divisions: str):
                 print("")
             case 4:
                 print("xX-", end = "")
-                for n in range(round((lenght - 6 - 9) / 2)):
+                for n in range(ceil((lenght - 6 - 9) / 2)):
                     print("=", end = "")
                 print("_xX{=}Xx_", end = "")
-                for n in range(round((lenght - 6 - 9) / 2)):
+                for n in range(ceil((lenght - 6 - 9) / 2)):
                     print("=", end = "")                
                 print("-Xx")
             case 5:
@@ -67,18 +78,18 @@ def d_print(text: str | list, divisions: str):
                 print("=<+:)")
             case 6:
                 print("):+>=", end = "")
-                for n in range(round((lenght - 10 - 9) / 2)):
+                for n in range(ceil((lenght - 10 - 9) / 2)):
                     print("-", end = "")
                 print("_xX{=}Xx_", end = "")
-                for n in range(round((lenght - 10 - 9) / 2)):
+                for n in range(ceil((lenght - 10 - 9) / 2)):
                     print("=", end = "")
                 print("=<+:(")
             case 7:
                 print("/>-", end = "")
-                for n in range(round((lenght - 6 - 9) / 2)):
+                for n in range(ceil((lenght - 6 - 9) / 2)):
                     print("=", end = "")
                 print("_xX{=}Xx_", end = "")
-                for n in range(round((lenght - 6 - 9) / 2)):
+                for n in range(ceil((lenght - 6 - 9) / 2)):
                     print("=", end = "")
                 print("-<\A"[:-1])
             case 8:
@@ -90,7 +101,7 @@ def d_print(text: str | list, divisions: str):
                 print("|>-<", end = "")
                 for n in range(lenght - 8):
                     print("=", end = "")
-                print(">-<|")      
+                print(">-<|")
             case _:
                 error(6)
 
@@ -168,6 +179,7 @@ def dialog(text: str, choice_list: list, permission: bool, divisions_list: str, 
     d_print(choice_list, divisions_list)
 
     num_choice = input(Fore.RED + "> " + Style.RESET_ALL)
+    num_choice = num_choice.strip()
     command(num_choice)
         
     if permission == True:
@@ -176,7 +188,8 @@ def dialog(text: str, choice_list: list, permission: bool, divisions_list: str, 
     else:
         return num_choice
 
-    permission_num_choice = input("> ")
+    permission_num_choice = input(Fore.RED + "> " + Style.RESET_ALL)
+    permission_num_choice = permission_num_choice.strip()
     command(permission_num_choice)
 
     if permission_num_choice == 1:
