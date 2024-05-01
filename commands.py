@@ -9,23 +9,33 @@ def help():
     "\n /help" + Style.RESET_ALL + " - помощь" + Fore.BLUE + \
     "\n /back" + Style.RESET_ALL + " - вернуться" + Fore.BLUE + \
     "\n /exit" + Style.RESET_ALL + " - выход" \
-), "1110")
-    back(history_data)
+), "211158")
+    back(history_data, True)
 
 history_data = []
 def history_for_back(id: str | int, history_data: list):
     history_data.append(id) 
     return history_data
 
-def back(history_data: list):
+def back(history_data: list, service_status):
     from pages import start_list
+
+    if service_status != True:
+        if len(history_data) == 1:
+            error(7)
+        elif len(history_data) != 1:
+            if history_data[-1] == history_data[-2]:
+                error(7)
+            else:
+                pass
+
     match int(history_data[-1]):
         case 1:
             start_list(history_data)
             return
         case _:
             error(5)
-            empty_dialog()
+            back(history_data, True)
 
 def command(text):
     match text[0]:
@@ -33,13 +43,13 @@ def command(text):
             match text:
                 case "/help":
                     help()
-                    back(history_data)
+                    back(history_data, True)
                 case "/exit":
                     exit()
                 case "/back":
-                    back(history_data)
+                    back(history_data, False)
                 case _:
                     error(3)
-                    back(history_data)
+                    back(history_data, True)
         case _:
             return text
