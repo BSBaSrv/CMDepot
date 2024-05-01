@@ -1,53 +1,94 @@
 from colorama import init
-init()
 from colorama import Fore, Style
+import re
+init()
 
 #Вспомогательная часть
 def error(num: int):
     from commands import back, history_data
     match num:
         case 1:
-            d_print(Fore.RED + "Error - ID: 1 - Incorrect type of text" + Style.RESET_ALL, "10")
+            d_print(Fore.RED + "Error - ID: 1 - Incorrect type of text" + Style.RESET_ALL, "10none")
             back(True)
         case 2:
-            d_print(Fore.RED + "Error - ID: 2 - Incorrect division setting" + Style.RESET_ALL, "10")
+            d_print(Fore.RED + "Error - ID: 2 - Incorrect division setting" + Style.RESET_ALL, "10none")
             back(True)
         case 3:
-            d_print(Fore.RED + "Error - ID: 3 - Unkown command" + Style.RESET_ALL, "10")
+            d_print(Fore.RED + "Error - ID: 3 - Unkown command" + Style.RESET_ALL, "10none",)
             back(True)
         case 4:
-            d_print(Fore.RED + "Error - ID: 4 - You can't choose in EMPTY dialog" + Style.RESET_ALL, "10")
+            d_print(Fore.RED + "Error - ID: 4 - You can't choose in EMPTY dialog" + Style.RESET_ALL, "10none")
             back(True)
         case 5:
-            d_print(Fore.RED + "Error - ID: 5 - Somthing is wrong... This function never doesn't exist" + Style.RESET_ALL, "10")
+            d_print(Fore.RED + "Error - ID: 5 - Somthing is wrong... This function never doesn't exist" + Style.RESET_ALL, "10none")
             back(True)
         case 6:
-            d_print(Fore.RED + "Error - ID: 6 - This type of division never doesn't exist" + Style.RESET_ALL, "10")
+            d_print(Fore.RED + "Error - ID: 6 - This type of division never doesn't exist" + Style.RESET_ALL, "10none")
             back(True)
         case 7:
-            d_print(Fore.RED + "Error - ID: 7 - Where?" + Style.RESET_ALL, "10")
+            d_print(Fore.RED + "Error - ID: 7 - Where to?" + Style.RESET_ALL, "10none")
+            back(True)
+        case 8:
+            d_print(Fore.RED + "Error - ID: 8 - This color never doesn't exist" + Style.RESET_ALL, "10none")
             back(True)
         case _:
-            d_print(Fore.RED + "Error - ID: 8 - Error ID doesn't exist" + Style.RESET_ALL, "10")
+            d_print(Fore.RED + "Error - ID: 8 - Error ID doesn't exist" + Style.RESET_ALL, "10none")
             back(True)
 
 
 #Главная часть
-def l_print(list):
+def c_print(text: str, color: str, not_end: bool):
+    match not_end:
+        case True:
+            match color.lower():
+                case "red":
+                    print(Fore.RED + text + Style.RESET_ALL, end = "")
+                case "green":
+                    print(Fore.GREEN + text + Style.RESET_ALL, end = "")
+                case "yellow":
+                    print(Fore.YELLOW + text + Style.RESET_ALL, end = "")
+                case "magenta":
+                    print(Fore.MAGENTA + text + Style.RESET_ALL, end = "")
+                case "cyan":
+                    print(Fore.CYAN + text + Style.RESET_ALL, end = "")
+                case "white":
+                    print(Fore.WHITE + text + Style.RESET_ALL, end = "")
+                case _:
+                    print(text, end = "")
+        case False:
+            match color.lower():
+                case "red":
+                    print(Fore.RED + text + Style.RESET_ALL)
+                case "green":
+                    print(Fore.GREEN + text + Style.RESET_ALL)
+                case "yellow":
+                    print(Fore.YELLOW + text + Style.RESET_ALL)
+                case "magenta":
+                    print(Fore.MAGENTA + text + Style.RESET_ALL)
+                case "cyan":
+                    print(Fore.CYAN + text + Style.RESET_ALL)
+                case "white":
+                    print(Fore.WHITE + text + Style.RESET_ALL)
+                case _:
+                    print(text)
+
+def l_print(list: str):
     for num in range(len(list)):
         print(str(num + 1) + ".", list[num])
 
-def d_print(text: str | list, divisions: str):
-    def empty_division(num):
+def d_print(text: str | list, divisions_settings: str):
+    def empty_division(num: int | str):
         if int(num) != 0:
             for n in range(int(num)):
                 print("")
         else:
             pass
 
-    def division(type: int, lenght: int):
+    def division(type: int, settings: int):
         from math import ceil
 
+        lenght = int(re.sub("\D", "", settings))
+        color = re.sub("\d+", "", settings)
         match int(type):
             case 0:
                 pass
@@ -64,48 +105,48 @@ def d_print(text: str | list, divisions: str):
                     print("_", end = "")
                 print("")
             case 4:
-                print("xX-", end = "")
-                for n in range(ceil((lenght - 6 - 9) / 2)):
+                c_print("xX+-", color, True)
+                for n in range(ceil((lenght - 8 - 11) / 2)):
                     print("=", end = "")
-                print("_xX{=}Xx_", end = "")
-                for n in range(ceil((lenght - 6 - 9) / 2)):
-                    print("=", end = "")                
-                print("-Xx")
+                c_print("-_xX{=}Xx_-", color, True)
+                for n in range(ceil((lenght - 8 - 11) / 2)):
+                    print("=", end = "")
+                c_print("-+Xx", color, False)
             case 5:
-                print("(:+>=", end = "")
+                c_print("(:+>=", color, True)
                 for n in range(lenght - 10):
                     print("-", end = "")
-                print("=<+:)")
+                c_print("=<+:)", color, False)
             case 6:
-                print("):+>=", end = "")
+                c_print("):+>=", color, True)
                 for n in range(ceil((lenght - 10 - 9) / 2)):
                     print("-", end = "")
-                print("_xX{=}Xx_", end = "")
+                c_print("_xX{=}Xx_", color, True)
                 for n in range(ceil((lenght - 10 - 9) / 2)):
-                    print("=", end = "")
-                print("=<+:(")
+                    print("-", end = "")
+                c_print("=<+:(", color, False)
             case 7:
-                print("/>-", end = "")
+                c_print("/>-", color, True)
                 for n in range(ceil((lenght - 6 - 9) / 2)):
                     print("=", end = "")
-                print("_xX{=}Xx_", end = "")
+                c_print("_xX{=}Xx_", color, True)
                 for n in range(ceil((lenght - 6 - 9) / 2)):
                     print("=", end = "")
-                print("-<\A"[:-1])
+                c_print("-<\A"[:-1], color, False)
             case 8:
-                print("\>-", end = "")
+                c_print("\>-", color, True)
                 for n in range(lenght - 6):
                     print("=", end = "")
-                print("-</")
+                c_print("-</", color, False)
             case 9:
-                print("|>-<", end = "")
+                c_print("|>-<", color, True)
                 for n in range(lenght - 8):
                     print("=", end = "")
-                print(">-<|")
+                c_print(">-<|", color, False)
             case _:
                 error(6)
 
-    divisions = list(divisions)
+    divisions = list(re.sub("\D", "", divisions_settings))
     div_lenght = 0
 
     if "\n" in text:
@@ -128,14 +169,15 @@ def d_print(text: str | list, divisions: str):
                 div_lenght = len(str(max(div_text, key = len))) - str(max(div_text, key = len)).count("\x1b")*4
             else:
                 div_lenght = 40
-
         case _:
             error(1)
+
+    divisions_settings = str(div_lenght) + re.sub("\d+", "", divisions_settings)
 
     match len(divisions) - 2:
         case 4:
             empty_division(int(divisions[0]))
-            division(divisions[-2], div_lenght)
+            division(divisions[-2], divisions_settings)
             empty_division(int(divisions[1]))
 
             if text == str(text):
@@ -146,7 +188,7 @@ def d_print(text: str | list, divisions: str):
                 error(1)
 
             empty_division(int(divisions[2]))
-            division(divisions[-1], div_lenght)
+            division(divisions[-1], divisions_settings)
             empty_division(int(divisions[3]))
         case 0:
             empty_division(divisions[0])
@@ -164,7 +206,6 @@ def d_print(text: str | list, divisions: str):
         case _:
             error(2)
 
-
 def dialog(text: str, choice_list: list, permission: bool, divisions_list: str, divisions_perm: str):
 
     from commands import command
@@ -172,7 +213,7 @@ def dialog(text: str, choice_list: list, permission: bool, divisions_list: str, 
     num_choice = 0
 
     if text != "" or text != " ":
-        d_print(text, "00")
+        d_print(text, "00none")
     else:
         pass
 
@@ -196,7 +237,7 @@ def dialog(text: str, choice_list: list, permission: bool, divisions_list: str, 
         return num_choice
     
 def empty_dialog():
-    num_or_not = dialog("", [], False, "10", "00")
+    num_or_not = dialog("", [], False, "10none", "00none")
 
     if num_or_not != "":
         error(4)

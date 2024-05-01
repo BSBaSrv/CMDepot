@@ -1,7 +1,7 @@
 from colorama import init
+from colorama import Fore, Style
+from layout import d_print, error
 init()
-from colorama import Fore, Back, Style
-from layout import d_print, error, empty_dialog
 
 history_data = []
 backup_history_data = []
@@ -12,7 +12,7 @@ def help():
     "\n /help" + Style.RESET_ALL + " - помощь" + Fore.BLUE + \
     "\n /back" + Style.RESET_ALL + " - вернуться" + Fore.BLUE + \
     "\n /exit" + Style.RESET_ALL + " - выход" \
-), "111058")
+), "111048none")
     back(True)
 
 def history_for_back(id: str | int, history_data: list):
@@ -62,7 +62,7 @@ def back(service_status: bool):
                         case _:
                             error(5)
 
-def command(text):
+def command(text: str):
     match text[0]:
         case "/":
             match text:
